@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nazir Noori - Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      --primary-neon: #00e6e6;
+      --secondary-neon: #e600e6;
+      --bg-dark: #0a0a10;
+      --text-light: #f0f8ff;
+      --subtle-gray: #7f8c8d;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--bg-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      transition: opacity 0.5s ease-out;
+    }
+
+    .preloader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .spinner {
+      border: 4px solid rgba(255, 255, 255, 0.2);
+      border-top: 4px solid var(--primary-neon);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .neon-text-primary {
+      color: var(--primary-neon);
+      text-shadow: 0 0 5px var(--primary-neon), 0 0 10px var(--primary-neon);
+      animation: flicker 1.5s infinite alternate;
+    }
+
+    .neon-text-secondary {
+      color: var(--secondary-neon);
+      text-shadow: 0 0 5px var(--secondary-neon), 0 0 10px var(--secondary-neon);
+    }
+
+    .hud-border {
+      border: 2px solid var(--primary-neon);
+      box-shadow: 0 0 10px var(--primary-neon), inset 0 0 10px var(--primary-neon);
+      position: relative;
+    }
+
+    .hud-border::before,
+    .hud-border::after {
+      content: '';
+      position: absolute;
+      background: var(--bg-dark);
+      width: 10px;
+      height: 10px;
+      z-index: 10;
+    }
+
+    .hud-border::before {
+      top: -6px;
+      left: -6px;
+    }
+
+    .hud-border::after {
+      bottom: -6px;
+      right: -6px;
+    }
+
+    .glitch {
+      position: relative;
+      animation: glitch-anim 2s infinite linear alternate-reverse;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .glitch::before {
+      left: 2px;
+      text-shadow: -2px 0 var(--primary-neon);
+      animation: glitch-anim-1 2s infinite linear alternate-reverse;
+    }
+
+    .glitch::after {
+      left: -2px;
+      text-shadow: -2px 0 var(--secondary-neon);
+      animation: glitch-anim-2 2s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-anim {
+      0% {
+        clip: rect(25px, 9999px, 83px, 0);
+      }
+
+      10% {
+        clip: rect(83px, 9999px, 15px, 0);
+      }
+
+      20% {
+        clip: rect(54px, 9999px, 91px, 0);
+      }
+
+      30% {
+        clip: rect(69px, 9999px, 7px, 0);
+      }
+
+      40% {
+        clip: rect(7px, 9999px, 20px, 0);
+      }
+
+      50% {
+        clip: rect(40px, 9999px, 59px, 0);
+      }
+
+      60% {
+        clip: rect(96px, 9999px, 81px, 0);
+      }
+
+      70% {
+        clip: rect(18px, 9999px, 72px, 0);
+      }
+
+      80% {
+        clip: rect(40px, 9999px, 16px, 0);
+      }
+
+      90% {
+        clip: rect(98px, 9999px, 75px, 0);
+      }
+
+      100% {
+        clip: rect(23px, 9999px, 18px, 0);
+      }
+    }
+
+    @keyframes glitch-anim-1 {
+      0% {
+        clip: rect(10px, 9999px, 93px, 0);
+      }
+
+      10% {
+        clip: rect(56px, 9999px, 45px, 0);
+      }
+
+      20% {
+        clip: rect(87px, 9999px, 22px, 0);
+      }
+
+      30% {
+        clip: rect(31px, 9999px, 74px, 0);
+      }
+
+      40% {
+        clip: rect(16px, 9999px, 82px, 0);
+      }
+
+      50% {
+        clip: rect(62px, 9999px, 71px, 0);
+      }
+
+      60% {
+        clip: rect(12px, 9999px, 91px, 0);
+      }
+
+      70% {
+        clip: rect(78px, 9999px, 14px, 0);
+      }
+
+      80% {
+        clip: rect(43px, 9999px, 60px, 0);
+      }
+
+      90% {
+        clip: rect(85px, 9999px, 5px, 0);
+      }
+
+      100% {
+        clip: rect(76px, 9999px, 34px, 0);
+      }
+    }
+
+    @keyframes glitch-anim-2 {
+      0% {
+        clip: rect(65px, 9999px, 94px, 0);
+      }
+
+      10% {
+        clip: rect(27px, 9999px, 63px, 0);
+      }
+
+      20% {
+        clip: rect(99px, 9999px, 10px, 0);
+      }
+
+      30% {
+        clip: rect(14px, 9999px, 89px, 0);
+      }
+
+      40% {
+        clip: rect(57px, 9999px, 42px, 0);
+      }
+
+      50% {
+        clip: rect(81px, 9999px, 6px, 0);
+      }
+
+      60% {
+        clip: rect(24px, 9999px, 58px, 0);
+      }
+
+      70% {
+        clip: rect(66px, 9999px, 18px, 0);
+      }
+
+      80% {
+        clip: rect(79px, 9999px, 35px, 0);
+      }
+
+      90% {
+        clip: rect(51px, 9999px, 100px, 0);
+      }
+
+      100% {
+        clip: rect(88px, 9999px, 30px, 0);
+      }
+    }
+
+    .hud-scanline {
+      background: linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .25) 50%), linear-gradient(90deg, rgba(255, 255, 255, .05) 1px, transparent 1px);
+      background-size: 100% 4px, 4px 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.2;
+    }
+
+    .content-card {
+      background-color: rgba(26, 26, 32, 0.5);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--primary-neon);
+      box-shadow: 0 0 10px var(--primary-neon);
+    }
+
+    .typing-cursor::after {
+      content: '';
+      display: inline-block;
+      background: var(--primary-neon);
+      width: 2px;
+      height: 1.2em;
+      margin-left: 5px;
+      animation: cursor-blink 1s infinite;
+    }
+
+    @keyframes cursor-blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+    }
+
+    nav a.active {
+      color: var(--primary-neon);
+      text-shadow: 0 0 5px var(--primary-neon);
+      transform: translateY(-2px);
+    }
+
+    .scroll-animation {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .scroll-animation.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body class="bg-bg-dark text-text-light">
+  <div id="preloader" class="preloader">
+    <div class="spinner"></div>
+    <p class="mt-4 text-primary-neon text-sm md:text-base">INITIALIZING PROTOCOL...</p>
+  </div>
+
+  <div class="hud-scanline"></div>
+
+  <nav id="main-nav" class="fixed top-0 left-0 w-full z-50 bg-bg-dark bg-opacity-80 backdrop-blur-sm p-4 text-center border-b border-primary-neon hidden">
+    <ul class="flex justify-center space-x-6 md:space-x-12 uppercase text-subtle-gray">
+      <li><a href="#about" class="hover:text-primary-neon transition duration-300">About</a></li>
+      <li><a href="#experience" class="hover:text-primary-neon transition duration-300">Experience</a></li>
+      <li><a href="#education" class="hover:text-primary-neon transition duration-300">Education</a></li>
+      <li><a href="#skills" class="hover:text-primary-neon transition duration-300">Skills</a></li>
+      <li><a href="#certifications" class="hover:text-primary-neon transition duration-300">Certifications</a></li>
+      <li><a href="#languages" class="hover:text-primary-neon transition duration-300">Languages</a></li>
+    </ul>
+  </nav>
+
+  <main class="container mx-auto px-6 py-20 md:py-32">
+    <section id="hero" class="min-h-screen flex flex-col justify-center items-center text-center">
+      <p class="text-xl md:text-2xl text-subtle-gray mb-4">
+        > ACCESS GRANTED
+      </p>
+      <h1 class="text-5xl md:text-8xl font-black font-['Orbitron'] uppercase text-text-light relative glitch" data-text="NAZIR NOORI">
+        NAZIR NOORI
+      </h1>
+      <p class="text-lg md:text-3xl font-['Orbitron'] neon-text-primary mt-4">
+        <span id="job-title" class="typing-cursor">A Web Developer & MBA</span>
+      </p>
+      <div class="mt-12 scroll-animation">
+        <a href="#about" class="px-8 py-3 text-lg font-bold font-['Orbitron'] uppercase transition-all duration-300 rounded-full
+                               hud-border hover:text-bg-dark hover:bg-primary-neon
+                               hover:shadow-[0_0_20px_var(--primary-neon)]">
+          Explore Profile >
+        </a>
+      </div>
+    </section>
+
+    <section id="about" class="py-24">
+      <div class="hud-border p-6 md:p-10 rounded-xl scroll-animation">
+        <h2 class="text-3xl font-black font-['Orbitron'] mb-6 neon-text-primary">
+          <span class="text-subtle-gray">></span> ABOUT.ME
+        </h2>
+        <p class="text-base md:text-lg leading-relaxed text-subtle-gray">
+          I am a strategic and results-driven professional with a dual background in business administration and computer science. I specialize in bridging the gap between technical teams and business stakeholders, ensuring projects are delivered on time and meet strategic objectives. My expertise lies in process improvement, project delivery, and creating scalable digital solutions. I am committed to continuous learning and using data-driven insights to achieve organizational excellence.
+        </p>
+      </div>
+    </section>
+
+    <section id="experience" class="py-24">
+      <h2 class="text-3xl font-black font-['Orbitron'] mb-12 neon-text-primary text-center scroll-animation">
+        <span class="text-subtle-gray">></span> EXPERIENCE
+      </h2>
+      <div class="space-y-12">
+        <div class="content-card p-6 md:p-8 rounded-xl scroll-animation">
+          <h3 class="text-xl font-bold neon-text-secondary">Business Process Associate</h3>
+          <p class="text-subtle-gray text-sm">Accenture Southeast Asia | March 2021 - Present</p>
+          <ul class="list-disc list-inside mt-4 text-text-light space-y-2">
+            <li>Evaluated business processes to identify requirements, uncover improvement opportunities, and implement effective solutions.</li>
+            <li>Communicated insights and strategic plans to cross-functional teams and management, fostering collaboration and alignment.</li>
+            <li>Collected and analyzed information from stakeholder meetings to produce comprehensive reports for informed decision-making.</li>
+          </ul>
+        </div>
+        <div class="content-card p-6 md:p-8 rounded-xl scroll-animation">
+          <h3 class="text-xl font-bold neon-text-secondary">Platform Specialist</h3>
+          <p class="text-subtle-gray text-sm">IT Business Solutions Sdn Bhd | June 2019 - March 2021</p>
+          <ul class="list-disc list-inside mt-4 text-text-light space-y-2">
+            <li>Collaborated with business process owners and SMEs to assess capabilities, identify pain points, and define requirements for platform solutions.</li>
+            <li>Oversaw the enforcement of client-side policies and compliance standards, ensuring platforms operated within regulatory guidelines.</li>
+            <li>Conducted user-testing and feedback sessions to improve platform usability and user experience.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="education" class="py-24">
+      <h2 class="text-3xl font-black font-['Orbitron'] mb-12 neon-text-primary text-center scroll-animation">
+        <span class="text-subtle-gray">></span> EDUCATION
+      </h2>
+      <div class="space-y-8">
+        <div class="content-card p-6 md:p-8 rounded-xl scroll-animation">
+          <h3 class="text-xl font-bold neon-text-secondary">MBA in General Management</h3>
+          <p class="text-subtle-gray text-sm">University of Wales Trinity Saint David, UK | 2021</p>
+          <p class="text-text-light mt-2">Awarded Academic Merit Recognition for consistently high performance.</p>
+        </div>
+        <div class="content-card p-6 md:p-8 rounded-xl scroll-animation">
+          <h3 class="text-xl font-bold neon-text-secondary">BSc in Computer Science (First Class Honors)</h3>
+          <p class="text-subtle-gray text-sm">International Islamic University Malaysia | 2019</p>
+          <p class="text-text-light mt-2">Recognized with Dean’s List honors for 8 consecutive semesters.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="py-24">
+      <h2 class="text-3xl font-black font-['Orbitron'] mb-12 neon-text-primary text-center scroll-animation">
+        <span class="text-subtle-gray">></span> SKILLS
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="content-card p-6 rounded-xl scroll-animation">
+          <h3 class="text-xl font-bold neon-text-secondary mb-4">Business & Project Tools</h3>
+          <ul class="list-disc list-inside text-text-light space-y-2">
+            <li>MS Office Suite (incl. 365), Microsoft Project</li>
+            <li>Asana, Confluence</li>
+          </ul>
+        </div>
+        <div class="content-card p-6 rounded-xl scroll-animation">
+          <h3 class="text-xl font-bold neon-text-secondary mb-4">Development & Technical</h3>
+          <ul class="list-disc list-inside text-text-light space-y-2">
+            <li>HTML5, CSS3, JavaScript, Java, SQL</li>
+            <li>.NET, MSSQL, XML</li>
+          </ul>
+        </div>
+        <div class="content-card p-6 rounded-xl md:col-span-2 scroll-animation">
+          <h3 class="text-xl font-bold neon-text-secondary mb-4">Soft Skills</h3>
+          <div class="flex flex-wrap gap-4 text-text-light">
+            <span class="bg-gray-800 px-4 py-2 rounded-full border border-subtle-gray">Analytical Thinking</span>
+            <span class="bg-gray-800 px-4 py-2 rounded-full border border-subtle-gray">Stakeholder Engagement</span>
+            <span class="bg-gray-800 px-4 py-2 rounded-full border border-subtle-gray">Team Leadership</span>
+            <span class="bg-gray-800 px-4 py-2 rounded-full border border-subtle-gray">Time Management</span>
+            <span class="bg-gray-800 px-4 py-2 rounded-full border border-subtle-gray">Communication</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="certifications" class="py-24">
+      <h2 class="text-3xl font-black font-['Orbitron'] mb-12 neon-text-primary text-center scroll-animation">
+        <span class="text-subtle-gray">></span> CERTIFICATIONS
+      </h2>
+      <div class="content-card p-6 md:p-8 rounded-xl scroll-animation">
+        <div class="flex flex-wrap gap-4 text-text-light">
+          <span class="bg-gray-800 px-4 py-2 rounded-full border border-subtle-gray">Google Project Management</span>
+          <span class="bg-gray-800 px-4 py-2 rounded-full border border-subtle-gray">Microsoft Project Management Professional</span>
+          <span class="bg-gray-800 px-4 py-2 rounded-full border border-subtle-gray">PMI: Generative AI for Project Managers</span>
+          <span class="bg-gray-800 px-4 py-2 rounded-full border border-subtle-gray">Agile & DevOps - Accenture</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="languages" class="py-24">
+      <h2 class="text-3xl font-black font-['Orbitron'] mb-12 neon-text-primary text-center scroll-animation">
+        <span class="text-subtle-gray">></span> LANGUAGES
+      </h2>
+      <div class="content-card p-6 md:p-8 rounded-xl scroll-animation">
+        <ul class="list-disc list-inside text-text-light space-y-2">
+          <li>English: Fluent</li>
+          <li>Persian: Native</li>
+          <li>Pashto: Proficient</li>
+          <li>French: Basic Conversational</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-bg-dark text-subtle-gray text-center py-6 border-t border-primary-neon">
+    <p class="mb-2 text-sm">
+      [ +60-183218150 ] | [ nazir_noori@yahoo.com ] | <a href="https://nazirnoori.info" class="hover:underline neon-text-primary">nazirnoori.info</a> | <a href="https://www.linkedin.com/in/nazir-noori" class="hover:underline neon-text-primary">LinkedIn</a>
+    </p>
+    <p class="text-xs">&copy; 2025 NAZIR NOORI. PROTOCOL V2.0 INITIALIZED.</p>
+  </footer>
+
+  <div class="fixed bottom-4 left-4 text-subtle-gray text-xs px-2 py-1 rounded-md bg-gray-800" id="user-info"></div>
+
+  <script type="module">
+    import {
+      initializeApp
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import {
+      getAuth,
+      signInAnonymously,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    // IMPORTANT: Replace this with your actual Firebase configuration object
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    onAuthStateChanged(auth, async (user) => {
+      const userInfoElement = document.getElementById('user-info');
+      if (user) {
+        userInfoElement.textContent = `[ USER: ${user.uid.substring(0, 8)}... ]`;
+      } else {
+        try {
+          await signInAnonymously(auth);
+        } catch (error) {
+          console.error("Error signing in anonymously:", error);
+          // Fallback in case of an error to prevent the page from being stuck
+          document.getElementById('preloader').classList.add('hidden');
+        }
+      }
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+      const preloader = document.getElementById('preloader');
+      const nav = document.getElementById('main-nav');
+      const navLinks = document.querySelectorAll('#main-nav a');
+      const sections = document.querySelectorAll('section');
+      // Hide preloader after a short delay
+      setTimeout(() => {
+        preloader.classList.add('hidden');
+      }, 1500);
+      // Show nav after hero section
+      const heroObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) {
+            nav.classList.remove('hidden');
+          } else {
+            nav.classList.add('hidden');
+          }
+        });
+      }, {
+        threshold: 0.5
+      });
+      heroObserver.observe(document.getElementById('hero'));
+      // Highlight active nav link on scroll
+      const navHighlightObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            navLinks.forEach(link => {
+              link.classList.remove('active');
+              if (link.getAttribute('href') === `#${id}`) {
+                link.classList.add('active');
+              }
+            });
+          }
+        });
+      }, {
+        rootMargin: '-50% 0px -50% 0px'
+      });
+      sections.forEach(section => {
+        navHighlightObserver.observe(section);
+      });
+      // Animate content on scroll
+      const scrollAnimations = document.querySelectorAll('.scroll-animation');
+      const animationObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            animationObserver.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.2
+      });
+      scrollAnimations.forEach(element => {
+        animationObserver.observe(element);
+      });
+    });
+  </script>
+</body>
+
+</html>
